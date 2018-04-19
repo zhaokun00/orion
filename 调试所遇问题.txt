@@ -1,0 +1,341 @@
+1.连接S3C2440开发板板只能通过串口登陆命令行界面,通过网口应该怎么连接?(使用ssh等暂时连接不上)
+
+tftp 30000000 uImage
+nand erase kernel
+nand write.jffs 30000000 kernel
+
+烧写完内核重启命令:boot
+
+
+
+--------------------------------------------
+
+(4)其他伪指令69页
+
+MOV指令、LDR指令、B指令、str指令
+
+(5)在使用C语言编写程序时,启动文件的编写
+参照电子书:97页
+
+(6)nor启动和nand启动
+https://www.cnblogs.com/dengxiaojun/p/4279424.html
+
+(7)以寄存器的形式访问硬件、以总线的显示访问硬件
+
+ROM:
+	nor flash:MX29LV800BT(外接)
+	nand flash:K9F1G08U0B(外接)
+	
+RAM:
+	SDRAM:K4S561632N(外接)
+	SRAM:4k(内置)
+
+
+(6)常用汇编指令
+   
+	
+	   
+(7)跳转指令	
+http://blog.csdn.net/liaoshengshi/article/details/39827353
+
+(8)
+pcm数据音量调节
+http://blog.csdn.net/timsley/article/details/50683084
+
+(9)Mediaplayer
+http://syab11.iteye.com/blog/761660
+http://www.jb51.net/article/122057.htm
+
+(10) ftell
+http://blog.sina.com.cn/s/blog_7af11b490100uew3.html
+http://blog.csdn.net/woaisia/article/details/46441449
+
+
+ASR:
+TTS:
+VAD:http://blog.csdn.net/ffmpeg4976/article/details/52416317
+
+
+
+linux c中的udp通讯
+http://blog.csdn.net/chinazhd/article/details/45134811
+
+
+
+5.printf执行可执行程序时时可以打印出来,只是不能通过adb logcat来查看
+
+10.
+http://blog.csdn.net/lin111000713/article/details/39560459
+http://blog.csdn.net/ling222529/article/details/27707805
+ 1919  arm-linux-gnueabi-objdump -d libz.so 
+ 
+ 1920  arm-linux-gnueabi-readelf -a libz.so
+ http://www.mamicode.com/info-detail-841774.html
+ file libz.so
+ http://blog.csdn.net/zaguobangzhu/article/details/49497931
+ 
+ http://blog.csdn.net/stpeace/article/details/47068181
+
+
+6.C++中释放数组对象
+http://blog.csdn.net/hellokandy/article/details/51970195
+
+
+
+7.android中调节音量https://www.2cto.com/kf/201503/386524.html
+8.android MediaPlayer播放音视频流程
+http://blog.csdn.net/zhanxiaoqi/article/details/65446909
+http://blog.csdn.net/reiliu/article/details/9060557
+9.fread函数
+http://blog.csdn.net/sky_qing/article/details/12783045
+
+10.Android:安装时提示：INSTALL_FAILED_INSUFFICIENT_STORAGE
+http://blog.csdn.net/annkie/article/details/8714716
+
+11.Android生成无签名的apk
+http://blog.csdn.net/visket2008/article/details/71480594
+
+12.git从远端
+https://www.cnblogs.com/faraway-tiny/p/4918366.html
+
+13.
+https://www.cnblogs.com/gamesun/p/3323155.html
+http://blog.sina.com.cn/s/blog_78d30f6b0101flh1.html
+
+14.sscanf的返回值
+每个函数都将返回成功转换并分配的字段数；返回值不包括已读取但未分配的字段。 返回值为 0 表示没有分配任何字段。 返回值是EOF是否有错误或如果在第一次转换之前到达字符串结尾。
+如果buffer或format是NULL调用指针，无效参数处理程序，如中所述参数验证。 如果允许继续执行，则这些函数返回 -1 并将errno设置为EINVAL。
+成功则返回参数数目，失败则返回-1，错误原因存于errno中。
+经多次测试[来源请求]，在linux系统中成功返回的是成功转换的值的个数，例如：
+sscanf("1 2 3","%d %d %d",buf1, buf2, buf3); 成功调用返回值为3，即buf1，buf2，buf3均成功转换。
+sscanf("1 2","%d %d %d",buf1, buf2, buf3); 成功调用返回值为2，即只有buf1，buf2成功转换。
+
+include <stdio.h>
+#include <string.h>
+
+int main() {
+
+    char buf[256] = {0};
+    float f = 0;
+
+    memcpy(buf,"1.2a3a",3);
+
+    printf("Hello\n");
+
+    int ret = sscanf(buf,"%f",&f);
+
+    printf("ret = %d,f = %f\n",ret,f);
+                                                                                                                                                                                       
+    return 0;
+}
+
+15.float比较大小
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+
+    float f1 = 1.2;                                                                                                               
+    float f2 = 1.1;
+
+    float ret = abs(f1 - f2);
+
+    if(ret < 0.001) {
+        printf("=====\n");
+    }   
+    else {
+        printf("<<<<<\n");
+    }   
+    
+    return 0;
+}
+
+16.fopen权限
+字符串	说明
+r	以只读方式打开文件，该文件必须存在。
+r+	以读/写方式打开文件，该文件必须存在。
+rb+	以读/写方式打开一个二进制文件，只允许读/写数据。
+rt+	以读/写方式打开一个文本文件，允许读和写。
+w	打开只写文件，若文件存在则长度清为 0，即该文件内容消失，若不存在则创建该文件。
+w+	打开可读/写文件，若文件存在则文件长度清为零，即该文件内容会消失。若文件不存在则建立该文件。
+a	以附加的方式打开只写文件。若文件不存在，则会建立该文件，如果文件存在，写入的数据会被加到文件尾，即文件原先的内容会被保留（EOF 符保留）。
+a+	以附加方式打开可读/写的文件。若文件不存在，则会建立该文件，如果文件存在，则写入的数据会被加到文件尾后，即文件原先的内容会被保留（原来的 EOF 符不保留）。
+wb	以只写方式打开或新建一个二进制文件，只允许写数据。
+wb+	以读/写方式打开或建立一个二进制文件，允许读和写。
+wt+	以读/写方式打开或建立一个文本文件，允许读写。
+at+	以读/写方式打开一个文本文件，允许读或在文本末追加数据。
+ab+	以读/写方式打开一个二进制文件，允许读或在文件末追加数据。
+
+17.
+wav头信息(以下都是十六进制形式):
+
+52 49 46 46: R I F F ;大小4字节,固定字符串"RIFF"
+86 D4 BB 02: 换算成数值为02BBD486;大小4字节 ,//整个文件长度-8
+57 41 56 45: W A V E,大小4字节,固定字符串"WAVE"
+66 6D 74 20:fmt,大小4字节,固定字符串"fmt"
+10 00 00 00:固定值16,大小4字节
+01 00:固定值1,大小2字节
+02 00:通道数,大小2字节
+44 AC 00 00:采样率,换算成数值为0000AC44,44100采样率
+10 B1 02 00:每秒所需的字节数,176400.44100(每秒采集的点数) * 2(通道数) * 2(一个点占的字节数) = 176400
+04 00:每个采样点需要的字节数,计算公式:声道数 * 每个采样需要的bit / 8 = 2 * 16 / 8 = 4
+10 00:每个采样点需要的bit数,一般为8位或者16位
+64 61 74 61:data,大小4字节,固定字符串"data"
+40 D4 BB 02: 换算成数值为02BBD440,从后往前,录音数据长度,不包括头部信息
+
+
+18.音频框架
+http://blog.csdn.net/xuesen_lin
+
+19.用指针表示数组形式
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+
+    short buf[10] = {0xaa,0xbb,0xcc,0xdd,0xee};
+
+    short *p = buf;
+
+    printf("p[0] = 0x%x,p[1] = 0x%x\n",p[0],p[1]);                                                                                                                                     
+    return 0;
+}
+
+//打印结果
+p[0] = 0xaa,p[1] = 0xbb
+
+20.java中传递参数
+http://blog.csdn.net/sinat_22013331/article/details/51150358
+
+
+22.java十进制怎么转十六进制
+https://zhidao.baidu.com/question/235099847.html
+http://blog.csdn.net/pz0605/article/details/52312063
+
+24.Android opus音频压缩
+	   
+
+30.如何求C语言字符串长度（strlen函数和sizeof关键字）
+http://blog.csdn.net/u012209626/article/details/47449885
+
+31.select函数
+https://www.cnblogs.com/hjslovewcl/archive/2011/03/16/2314330.html
+
+30.封装libcurl
+http://blog.csdn.net/mfcing/article/details/50775164
+libcurl安装
+http://blog.csdn.net/zhouzhenhe2008/article/details/53768854
+arm移植linuxlibcurl
+http://blog.csdn.net/miaodichiyou/article/details/50385049
+
+
+
+31.多个jdk安装
+https://www.cnblogs.com/xu-dong/p/6429301.html
+卸载jdk
+http://blog.csdn.net/bao19901210/article/details/52091867
+
+34.c++实现封装socket
+http://blog.csdn.net/chinabhlt/article/details/49996209
+
+36.linux C++下的线程池
+http://blog.csdn.net/sumkee911/article/details/50231891
+
+37.Linux下使用inotify实现文件监控
+http://blog.csdn.net/stayneckwind2/article/details/78575088
+java中的回调函数(有道云笔记)
+
+38.
+linux下的log4cplus的安装和使用
+http://blog.csdn.net/lx_shudong/article/details/48732999
+https://www.cnblogs.com/rosesmall/archive/2012/05/07/2487445.html
+
+39.http://blog.csdn.net/shuaiyou_comon/article/details/75425639?locationNum=5&fps=1
+http://blog.csdn.net/shuaiyou_comon/article/details/75425639?locationNum=5&fps=1
+
+
+42.dts文件
+http://blog.csdn.net/radianceblau/article/details/70800076
+
+43.Android系统属性
+https://www.cnblogs.com/l2rf/p/6610348.html、
+以命令行形式启动app
+以命令形式发送广播、以隐士的方式注册广播
+
+44.C++中new时有括号和没有括号
+
+45.android实现应用程序前台和后台之间转换的监听的两种方式
+http://blog.csdn.net/woshizisezise/article/details/53303832
+
+46.程序运行产生SIGABRT信号的原因
+http://blog.csdn.net/season_hangzhou/article/details/54926636
+
+47.Android Studio中导入GitHub中的工程
+Android Studio中直接下载GitHub中的工程
+Android Studio中没有git
+http://blog.csdn.net/lovekbaby/article/details/50358590
+http://blog.csdn.net/hyr83960944/article/details/36180213
+http://blog.csdn.net/fiomangeyameng/article/details/53024529
+
+48.android中获取时间的方法
+http://blog.csdn.net/chaoyu168/article/details/50729689
+
+49.Android中的logger
+http://blog.csdn.net/like_program/article/details/52986553
+http://blog.csdn.net/flueky/article/details/77164172
+
+50.C++中需要解决的类库
+
+ 日志 GLOG
+ 解析xml
+ http://blog.csdn.net/Cry_Alone/article/details/51174568
+ easySqlite
+ http://blog.csdn.net/e5Max/article/details/42917467
+ http://blog.csdn.net/wangshubo1989/article/details/52576556
+ mqtt
+ libcurl支持https协议
+ http://blog.csdn.net/andylauren/article/details/53456340
+ http://blog.csdn.net/delphiwcdj/article/details/23348079
+ https://www.cnblogs.com/yangxunpeng/articles/7041088.html
+ 
+ libev
+ http://blog.csdn.net/cxy450019566/article/details/52606512
+ 
+ libnet库的使用
+ tcp第三方库:
+ 
+ C++框架：
+ 消息驱动型、事件驱动型
+ http://blog.csdn.net/Scythe666/article/details/61634704
+ http://blog.csdn.net/suppercoder/article/details/32319775
+ http://blog.csdn.net/ygrx/article/list/2
+ C++中获取变量的名字获取变量的类型
+ http://blog.csdn.net/sjhuangx/article/details/50329917
+ https://zhidao.baidu.com/question/118450796.html
+ 网关:
+ http://www.infoq.com/cn/news/2016/07/API-background-architecture-floo
+ 
+ C++中的事件机制
+ https://www.cnblogs.com/bastard/archive/2012/01/10/2318417.html
+ http://blog.csdn.net/zhuweisky/article/details/4608982
+ 
+ 物联网网关
+ http://www.elecfans.com/iot/370452.html
+ http://blog.csdn.net/egworkspace/article/details/78900555
+ 
+ C++设置监听
+ http://blog.csdn.net/liukang325/article/details/44461449
+ http://blog.sina.com.cn/s/blog_dd0b6c0e0102uwif.html
+ 
+ 
+ C++中的文件读写
+ 
+ C++11 新特性总结
+ https://blog.csdn.net/zdy0_2004/article/details/69934828
+ 
+ C++11中的auto类型
+ 
+ 
+ http://blog.jobbole.com/44015/
+ C++开发者都应该使用的10个C++11特性
